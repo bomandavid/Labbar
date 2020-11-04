@@ -8,7 +8,7 @@ public class Volvo240{
     public double currentSpeed; // The current speed of the car
     public Color color; // Color of the car
     public String modelName; // The car model name
-    
+
     public Volvo240(){
         nrDoors = 4;
         color = Color.black;
@@ -16,7 +16,7 @@ public class Volvo240{
         modelName = "Volvo240";
         stopEngine();
     }
-    
+
     public int getNrDoors(){
         return nrDoors;
     }
@@ -33,23 +33,23 @@ public class Volvo240{
     }
 
     public void setColor(Color clr){
-	    color = clr;
+        color = clr;
     }
 
     public void startEngine(){
-	    currentSpeed = 0.1;
+        currentSpeed = 0.1;
     }
 
     public void stopEngine(){
-	    currentSpeed = 0;
+        currentSpeed = 0;
     }
-    
+
     public double speedFactor(){
         return enginePower * 0.01 * trimFactor;
     }
 
     public void incrementSpeed(double amount){
-	    currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
+        currentSpeed = Math.min(getCurrentSpeed() + speedFactor() * amount,enginePower);
     }
 
     public void decrementSpeed(double amount){
@@ -66,3 +66,4 @@ public class Volvo240{
         decrementSpeed(amount);
     }
 }
+
