@@ -113,4 +113,47 @@ public class testing {
         assertEquals(Color.blue,volvo.getColor());
     }
 
+    @Test
+    public void testLoadingAngle(){
+        Scania scan = new Scania();
+        scan.increaseLoadingAngle(10);
+        scan.decreaseLoadingAngle(-15);
+        assertEquals(0,scan.getLoadingAngle());
+    }
+
+    @Test
+    public void testChangeAngleWhileMoving(){
+        Scania scan = new Scania();
+        scan.startEngine();
+        scan.increaseLoadingAngle(10);
+        assertEquals(0,scan.getLoadingAngle());
+    }
+
+    @Test
+    void testLoadCar() {
+        Saab95 saab = new Saab95();
+        CarHauler hauler =  new CarHauler();
+        hauler.loadCar(saab);
+        hauler.unloadCar();
+    }
+
+    @Test
+    void testMoveCarHauler(){
+        Saab95 saab = new Saab95();
+        CarHauler hauler =  new CarHauler();
+        hauler.rampDown();
+        hauler.loadCar(saab);
+        hauler.rampUp();
+        hauler.startEngine();
+        hauler.setCurrentSpeed(100);
+        hauler.move();
+        assertEquals(100, saab.getPosition().y);
+
+    }
+
+    @Test
+    public void testSetSpeedCarHauler(){
+        CarHauler hauler = new CarHauler();
+
+    }
 }

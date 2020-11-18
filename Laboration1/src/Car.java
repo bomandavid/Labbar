@@ -8,17 +8,17 @@ import java.awt.geom.Point2D;
  */
 
 public abstract class Car implements Movable{
-
     private int nrDoors; // Number of doors on the car
     private double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     private Point2D.Double position;
     private int dir;
-    private static final int NORTH = 0;
-    private static final int EAST = 1;
-    private static final int SOUTH = 2;
-    private static final int WEST = 3;
+    private int size;
+    public static final int NORTH = 0;
+    public static final int EAST = 1;
+    public static final int SOUTH = 2;
+    public static final int WEST = 3;
 
     /**
      * Car is given default position at (0,0)
@@ -27,7 +27,13 @@ public abstract class Car implements Movable{
         position = new Point2D.Double(0.0,0.0);
         stopEngine();
     }
+    public void setSize(int Size){
+        this.size=size;
+    }
 
+    public int getSize() {
+        return size;
+    }
     /**
      * Sets number of doors
      * @param nrDoors chosen number of doors for car
@@ -96,9 +102,7 @@ public abstract class Car implements Movable{
     /**
      * Starts car engine and gives default starting speed 0.1
      */
-    protected void startEngine(){
-        currentSpeed = 0.1;
-    }
+    protected void startEngine(){ setCurrentSpeed(0.1);}
 
     /**
      * Sets current speed to 0
@@ -181,6 +185,11 @@ public abstract class Car implements Movable{
         return position;
     }
 
+    protected void setPosition(Point2D.Double point){
+        position.x = point.x;
+        position.y = point.y;
+    }
+
     /**
      * Getter for direction of car.
      * @return Direction of the car.
@@ -212,5 +221,6 @@ public abstract class Car implements Movable{
             case EAST: dir = SOUTH; break;
         }
     }
+
 
 }

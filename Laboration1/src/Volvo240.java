@@ -11,11 +11,11 @@ public class Volvo240 extends Car {
         setNrDoors(4);
         setColor(Color.black);
         setEnginePower(100);
+        setSize(1);
     }
 
     /**
      * Converts engine power into speed factor.
-     * @return speed factor
      */
     @Override
     public double speedFactor() {

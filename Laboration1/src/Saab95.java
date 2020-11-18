@@ -12,6 +12,7 @@ public class Saab95 extends Car{
         setColor(Color.red);
         setEnginePower(125);
         turboOn = false;
+        setSize(1);
     }
 
     /**
@@ -30,7 +31,6 @@ public class Saab95 extends Car{
 
     /**
      * Computes speed factor from engine power and turbo state
-     * @return Speed factor
      */
     @Override
     public double speedFactor(){
