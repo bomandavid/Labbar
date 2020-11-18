@@ -2,7 +2,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Stack;
 
-public class CarHauler extends Car { //rätt att extenda car?  delegera till scania? Kan lasta Scania och andra CarHauler???
+public class CarHauler extends Car { //has a scania
 
     private boolean rampUp;
     private final int maxNumberCars = 5;
@@ -45,27 +45,9 @@ public class CarHauler extends Car { //rätt att extenda car?  delegera till sca
 
     @Override
     public void move() {
-        double x = getPosition().x;
-        double y = getPosition().y;
-        switch (getDir()) {
-            case NORTH:
-                y += getCurrentSpeed();
-                break;
-            case WEST:
-                x -= getCurrentSpeed();
-                break;
-            case SOUTH:
-                y -= getCurrentSpeed();
-                break;
-            case EAST:
-                x += getCurrentSpeed();
-                break;
-        }
-        Point2D.Double point = new Point2D.Double(x, y);
-        setPosition(point);
-
+        super.move();
         for (Car car : stack) {
-            car.setPosition(point);
+            car.setPosition(getPosition());
         }
     }
 
