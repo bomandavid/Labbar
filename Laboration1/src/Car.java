@@ -27,10 +27,19 @@ public abstract class Car implements Movable{
         position = new Point2D.Double(0.0,0.0);
         stopEngine();
     }
+
+    /**
+     * Set size of car.
+     * @param Size
+     */
     public void setSize(int Size){
         this.size=size;
     }
 
+    /**
+     * Get size of car.
+     * @return
+     */
     public int getSize() {
         return size;
     }
@@ -197,6 +206,8 @@ public abstract class Car implements Movable{
     public int getDir () {
         return dir;
     }
+
+    public void setDir(int dir){ this.dir=dir; }
 
     /**
      * Changes the direction to one turn to the left.

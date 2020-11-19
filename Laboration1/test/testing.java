@@ -143,7 +143,7 @@ public class testing {
         CarHauler hauler =  new CarHauler();
         hauler.rampDown();
         hauler.loadCar(saab);
-        hauler.rampUp();
+        hauler.setRampUp();
         hauler.startEngine();
         hauler.setCurrentSpeed(100);
         hauler.move();
@@ -155,5 +155,40 @@ public class testing {
     public void testSetSpeedCarHauler(){
         CarHauler hauler = new CarHauler();
 
+    }
+
+    @Test
+    void testUnloadedCarPosition(){
+        Saab95 saab = new Saab95();
+        saab.turnLeft();
+        CarHauler hauler =  new CarHauler();
+        hauler.setRampDown();
+        hauler.loadCar(saab);
+        hauler.setRampUp();
+        hauler.startEngine();
+        hauler.setCurrentSpeed(100);
+        hauler.turnRight();
+        hauler.move();
+        hauler.setCurrentSpeed(0);
+        hauler.setRampDown();
+        hauler.unloadCar();
+        assertEquals(99, saab.getPosition().x);
+    }
+
+    @Test
+    void testCarGarage(){
+        Garage<Car> garage = new Garage<>(1);
+        garage.add(new Saab95());
+        garage.add(new Volvo240());
+        assertEquals(1, garage.garageStatus().size());
+    }
+
+    @Test
+    void testVolvoGarageRemove(){
+        Volvo240 volvo = new Volvo240();
+        Garage<Volvo240> garage = new Garage<>(2);
+        garage.add(volvo);
+        garage.remove(volvo);
+        assertEquals(0,garage.garageStatus().size());
     }
 }

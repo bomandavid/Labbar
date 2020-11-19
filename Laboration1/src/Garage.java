@@ -14,7 +14,7 @@ public class Garage <T extends Car> {
     }
 
     /**
-     * Adds car to garage if there is space
+     * Adds car to garage if there is available space
      * @param car Car to be added
      */
     public void add(T car){
@@ -23,16 +23,19 @@ public class Garage <T extends Car> {
     }
 
     /**
-     *
-     * @param car
+     * Removes the the specified car from the ArrayList of garage constituents.
+     * @param car Car to be removed.
      */
-    public void remove(T car){ //Hur får vi ut en subtyp
+    public void remove(T car){
         cars.remove(car);
     }
 
-    public static void main(String[] args) {
-        Garage<Car> repair = new Garage<>(5);
-        Saab95 saab = new Saab95();
-        repair.add(saab);
+    /**
+     * Retuns the ArrayList of garage constituents.
+     * @return cars
+     */
+    public List<T> garageStatus(){
+        return cars;
     }
+
 }
