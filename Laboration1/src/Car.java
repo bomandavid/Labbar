@@ -2,11 +2,12 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 
 /**
- * @author      Firstname Lastname david.boman99@hotmail.com
- * @version     1                 (current version number of program)
- * @since       1          (the version of the package this class was first added to)
+ * <p>
+ *     The Car class represents an abstract version of a car. It implements the Movable interface.
+ *     The class contains standard methods that represent how a car would act. The methods have aspects of a
+ *     cars speed, direction, position, engine power, size, number of doors and color.
+ * </p>
  */
-
 public abstract class Car implements Movable{
     private int nrDoors; // Number of doors on the car
     private double enginePower; // Engine power of the car
@@ -30,9 +31,9 @@ public abstract class Car implements Movable{
 
     /**
      * Set size of car.
-     * @param Size
+     * @param size
      */
-    public void setSize(int Size){
+    public void setSize(int size){
         this.size=size;
     }
 

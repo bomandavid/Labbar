@@ -1,5 +1,9 @@
 import java.util.*;
 
+/**
+ * Garage with the ability to add and remove cars
+ * @param <T> generic type of car
+ */
 public class Garage <T extends Car> {
     private int capacity;
     private List<T> cars;
@@ -37,5 +41,4 @@ public class Garage <T extends Car> {
     public List<T> garageStatus(){
         return cars;
     }
-
 }

@@ -1,5 +1,12 @@
 import java.awt.*;
 
+/**
+ * <p>
+ *     The Scania class inherits from the Car class. As opposed to a generic Car, a Scania
+ *     has a flat bed for loading and unloading cargo. The bed can be risen and lowered and the Scania
+ *     is prevented from moving if the flat bed is not in its original position.
+ * </p>
+ */
 public class Scania extends Car {
     private double loadingAngle;
 

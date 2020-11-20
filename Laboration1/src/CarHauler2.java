@@ -2,49 +2,82 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Stack;
 
-public class CarHauler2{
-
-    private final int maxNumberCars = 5;
-    private Stack<Car> stack;
+public class CarHauler2 implements Movable{
+    private final int capacity = 5;
+    private Stack<Car> cars;
     private Scania hasAScania;
 
     public CarHauler2() {
         hasAScania = new Scania();
-        stack = new Stack<>();
+        cars = new Stack<>();
+        setNrDoors(2);
+        setColor(Color.blue);
+        setEnginePower(400);
+        setSize(2);
     }
 
-    public double speedFactor() { return hasAScania.speedFactor(); }
+    public double speedFactor() {
+        return hasAScania.speedFactor();
+    }
 
-    public void rampUp(){hasAScania.decreaseLoadingAngle(70); }
+    public void setRampUp(){
+        hasAScania.decreaseLoadingAngle(70);
+    }
 
-    public void rampDown(){ hasAScania.increaseLoadingAngle(70); }
+    public void setRampDown(){
+        hasAScania.increaseLoadingAngle(70);
+    }
 
-    public void setCurrentSpeed(double amount) { hasAScania.setCurrentSpeed(amount); }
+    public void setCurrentSpeed(double amount) {
+        hasAScania.setCurrentSpeed(amount);
+    }
 
-    public void move(){
-        hasAScania.move();
-        for (Car car : stack) {
+    public void loadCar(Car car){
+        if (cars.size() < capacity && hasAScania.getLoadingAngle() == 70 && car.getSize() < 2 && getPosition().distance(car.getPosition()) < 4) {
             car.setPosition(getPosition());
+            cars.push(car);
+        }
+        car.setDir(getDir());
+    }
+
+    public void unloadCar(){
+        if (hasAScania.getLoadingAngle() == 70) {
+            Car car = cars.pop();
+            switch (getDir()) {
+                case Car.NORTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y + 1)); break;
+                case Car.WEST: car.setPosition(new Point2D.Double(getPosition().x + 1, getPosition().y)); break;
+                case Car.SOUTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y - 1)); break;
+                case Car.EAST: car.setPosition(new Point2D.Double(getPosition().x - 1, getPosition().y)); break;
+            }
         }
     }
 
-    public Point2D.Double getPosition(){ return hasAScania.getPosition(); }
+    public void move(){
+        hasAScania.move();
+        for (Car car : cars) {
+            car.setPosition(getPosition());
+        }
+    }
+    public void turnLeft() {
+        hasAScania.turnLeft();
+        for (Car car : cars) {
+            car.turnLeft();
+        }
+    }
+
+    public void turnRight() {
+        hasAScania.turnRight();
+        for (Car car : cars) {
+            car.turnRight();
+        }
+    }
+
+    public Point2D.Double getPosition(){
+        return hasAScania.getPosition();
+    }
 
     public double getLoadingAngle(){
         return hasAScania.getLoadingAngle();
-    }
-
-    public static void main(String[] arg){
-        CarHauler2 hauler = new CarHauler2();
-        hauler.rampDown();
-    }
-
-    public void increaseLoadingAngle(double amount) {
-        hasAScania.increaseLoadingAngle(amount);
-    }
-
-    public void decreaseLoadingAngle(double amount) {
-        hasAScania.decreaseLoadingAngle(amount);
     }
 
     public void setSize(int Size) {
@@ -119,11 +152,5 @@ public class CarHauler2{
         hasAScania.setDir(dir);
     }
 
-    public void turnLeft() {
-        hasAScania.turnLeft();
-    }
 
-    public void turnRight() {
-        hasAScania.turnRight();
-    }
 }

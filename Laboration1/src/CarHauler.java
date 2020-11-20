@@ -2,16 +2,25 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Stack;
 
-
+/**
+ * <p>
+ *     Car hauler can load and unload cars to its stack if the ramp is down.
+ *     When the car hauler moves the cars in its stack move aswell.
+ *     The position of the ramp can't change while moving.
+ * </p>
+ *
+ */
 public class CarHauler extends Car {
     private boolean rampUp;
-    private final int maxNumberCars = 5;
+    private int capacity;
     private Stack<Car> cars;
 
     /**
-     * Sets number of doors, color, Engine power, size and if ramp is up or down. Also initiates a stack.
+     * sets number of doors, color, Engine power, size and if ramp is up or down. Also initiates a stack with a max capacity.
+     * @param capacity The max capacity of the car hauler
      */
-    public CarHauler() {
+    public CarHauler(int capacity) {
+        this.capacity = capacity;
         setNrDoors(2);
         setColor(Color.blue);
         setEnginePower(400);
@@ -34,7 +43,7 @@ public class CarHauler extends Car {
      * @param car Car to be loaded
      */
     public void loadCar(Car car) {
-        if (cars.size() < maxNumberCars && !rampUp && car.getSize() < 2 && getPosition().distance(car.getPosition()) < 4) {
+        if (cars.size() < capacity && !rampUp && car.getSize() < 2 && getPosition().distance(car.getPosition()) < 4) {
             car.setPosition(getPosition());
             cars.push(car);
         }
