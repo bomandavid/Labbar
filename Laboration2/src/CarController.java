@@ -1,6 +1,7 @@
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.geom.Point2D;
 import java.util.ArrayList;
 
 /*
@@ -30,6 +31,8 @@ public class CarController {
         CarController cc = new CarController();
 
         cc.cars.add(new Volvo240());
+        cc.cars.add(new Saab95());
+        cc.cars.get(1).setPosition(new Point2D.Double(100,0));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -44,32 +47,49 @@ public class CarController {
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
             for (Car car : cars) {
-                if(isAtBorder(car)) {
-                      invertDirectionOfCar(car);
+                if(canMove(car)) {
+                    moveCarAndPicture(car);
                 }
-                moveCarAndPicture(car);
+                else{
+                    car.stopEngine();
+                    car.invertDir();
+                    car.startEngine();
+                }
             }
         }
     }
 
-    public boolean isAtBorder(Car car){
+    public boolean canMove(Car car){
         double x = car.getPosition().getX();
         double y = car.getPosition().getY();
+        Point2D.Double testPoint = new Point2D.Double();
+        switch(car.getDir()){
+            case Car.NORTH : testPoint = new Point2D.Double(x, y + car.getCurrentSpeed()); break;
+            case Car.SOUTH : testPoint = new Point2D.Double(x, y - car.getCurrentSpeed()); break;
+            case Car.EAST : testPoint = new Point2D.Double(x + car.getCurrentSpeed(), y); break;
+            case Car.WEST : testPoint = new Point2D.Double(x - car.getCurrentSpeed(), y ); break;
+        }
+        if(isOutOfBounds(testPoint))
+            return false;
+        return true;
+    }
+
+    public boolean isOutOfBounds(Point2D.Double testPoint){
+        double x = testPoint.getX();
+        double y = testPoint.getY();
         if(y < 0 || x < 0 || x > frame.getX() || y > frame.getY() - 300) {
             return true;
         }
         return false;
     }
+
     public void moveCarAndPicture(Car car){
         car.move();
         int x = (int) Math.round(car.getPosition().getX());
         int y = (int) Math.round(car.getPosition().getY());
-        frame.drawPanel.moveit(x, y);
+        frame.drawPanel.moveit(x, y, car);
         frame.drawPanel.repaint();
-    }
-
-    public void invertDirectionOfCar(Car car){
-        car.turnLeft(); car.turnLeft();
+        System.out.println(x+" "+y);
     }
 
     // Calls the gas method for each car once
@@ -87,6 +107,20 @@ public class CarController {
         for (Car car : cars
         ) {
             car.brake(brake);
+        }
+    }
+
+    void turboOn(){
+        for(Car car : cars){
+            if(car instanceof Saab95)
+                ((Saab95) car).setTurboOn();
+        }
+    }
+
+    void turboOff(){
+        for(Car car : cars){
+            if(car instanceof Saab95)
+                ((Saab95) car).setTurboOff();
         }
     }
 

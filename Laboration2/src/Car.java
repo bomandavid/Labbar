@@ -112,7 +112,7 @@ public abstract class Car implements Movable{
     /**
      * Starts car engine and gives default starting speed 0.1
      */
-    protected void startEngine(){ setCurrentSpeed(1);}
+    protected void startEngine(){ setCurrentSpeed(0.1);}
 
     /**
      * Sets current speed to 0
@@ -209,6 +209,10 @@ public abstract class Car implements Movable{
     }
 
     public void setDir(int dir){ this.dir=dir; }
+
+    public void invertDir(){
+        turnLeft(); turnLeft();
+    }
 
     /**
      * Changes the direction to one turn to the left.
