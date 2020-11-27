@@ -49,6 +49,7 @@ public class Scania extends Car {
         if (getCurrentSpeed() == 0) {
             if (loadingAngle + amount > 70) {
                 loadingAngle = 70;
+                System.out.println("Loading angle is 70. ");
             } else
                 loadingAngle += amount;
         }
@@ -62,6 +63,7 @@ public class Scania extends Car {
     public void decreaseLoadingAngle(double amount) {
         if (loadingAngle - Math.abs(amount) < 0) {
             loadingAngle = 0;
+            System.out.println("Loading angle is to 0. ");
         } else
             loadingAngle -= Math.abs(amount);
     }

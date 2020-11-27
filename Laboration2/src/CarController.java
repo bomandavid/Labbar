@@ -1,4 +1,5 @@
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
@@ -21,6 +22,7 @@ public class CarController {
 
     // The frame that represents this instance View of the MVC pattern
     CarView frame;
+
     // A list of cars, modify if needed
     ArrayList<Car> cars = new ArrayList<>();
 
@@ -32,7 +34,9 @@ public class CarController {
 
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
+        cc.cars.add(new Scania());
         cc.cars.get(1).setPosition(new Point2D.Double(100,0));
+        cc.cars.get(2).setPosition(new Point2D.Double(400,0));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
@@ -52,7 +56,9 @@ public class CarController {
                 }
                 else{
                     car.stopEngine();
-                    car.invertDir();
+                    //car.invertDir();
+                    car.turnLeft();
+                    System.out.println("Turning");
                     car.startEngine();
                 }
             }
@@ -64,8 +70,8 @@ public class CarController {
         double y = car.getPosition().getY();
         Point2D.Double testPoint = new Point2D.Double();
         switch(car.getDir()){
-            case Car.NORTH : testPoint = new Point2D.Double(x, y + car.getCurrentSpeed()); break;
-            case Car.SOUTH : testPoint = new Point2D.Double(x, y - car.getCurrentSpeed()); break;
+            case Car.NORTH : testPoint = new Point2D.Double(x, y - car.getCurrentSpeed()); break;
+            case Car.SOUTH : testPoint = new Point2D.Double(x, y + car.getCurrentSpeed()); break;
             case Car.EAST : testPoint = new Point2D.Double(x + car.getCurrentSpeed(), y); break;
             case Car.WEST : testPoint = new Point2D.Double(x - car.getCurrentSpeed(), y ); break;
         }
@@ -77,7 +83,7 @@ public class CarController {
     public boolean isOutOfBounds(Point2D.Double testPoint){
         double x = testPoint.getX();
         double y = testPoint.getY();
-        if(y < 0 || x < 0 || x > frame.getX() || y > frame.getY() - 300) {
+        if(y < 0 || x < 0 || x > frame.getX()-100 || y > frame.getY() - 300) {
             return true;
         }
         return false;
@@ -89,14 +95,12 @@ public class CarController {
         int y = (int) Math.round(car.getPosition().getY());
         frame.drawPanel.moveit(x, y, car);
         frame.drawPanel.repaint();
-        System.out.println(x+" "+y);
     }
 
     // Calls the gas method for each car once
     void gas(int amount) {
         double gas = ((double) amount) / 100;
-        for (Car car : cars
-                ) {
+        for (Car car : cars) {
             car.gas(gas);
         }
     }
@@ -124,9 +128,29 @@ public class CarController {
         }
     }
 
+    void lowerBed(){
+        for(Car car : cars){
+            if(car instanceof Scania)
+                ((Scania) car).decreaseLoadingAngle(70);
+        }
+    }
+
+    void liftBed(){
+        for(Car car : cars){
+            if(car instanceof Scania)
+                ((Scania) car).increaseLoadingAngle(70);
+        }
+    }
+
     void startEngine(){
         for(Car car : cars){
             car.startEngine();
+        }
+    }
+
+    void stopEngine(){
+        for(Car car : cars){
+            car.stopEngine();
         }
     }
 }

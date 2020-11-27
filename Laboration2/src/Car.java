@@ -25,6 +25,7 @@ public abstract class Car implements Movable{
      * Car is given default position at (0,0)
      */
     public Car(){
+        setDir(SOUTH);
         position = new Point2D.Double(0.0,0.0);
         stopEngine();
     }
@@ -180,9 +181,9 @@ public abstract class Car implements Movable{
      */
     public void move () {
         switch (getDir()) {
-            case NORTH: position.y += currentSpeed; break;
+            case NORTH: position.y -= currentSpeed; break;
             case WEST: position.x -= currentSpeed; break;
-            case SOUTH: position.y -= currentSpeed; break;
+            case SOUTH: position.y += currentSpeed; break;
             case EAST: position.x += currentSpeed; break;
         }
     }
