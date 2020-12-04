@@ -12,7 +12,7 @@ public class Volvo240 extends Car {
     public Volvo240() {
         setNrDoors(4);
         setColor(Color.black);
-        setEnginePower(100);
+        setEnginePower(20);
         setSize(1);
     }
 
@@ -22,5 +22,9 @@ public class Volvo240 extends Car {
     @Override
     public double speedFactor() {
         return getEnginePower() * 0.01 * trimFactor;
+    }
+
+    public String getImage(){
+        return "pics/Volvo240.jpg";
     }
 }

@@ -3,6 +3,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+import java.util.ArrayList;
 
 // This panel represent the animated part of the view with the car images.
 
@@ -13,7 +14,7 @@ public class DrawPanel extends JPanel{
     // To keep track of a single cars position
     Point volvoPoint = new Point();
     Point saabPoint = new Point(100,0);
-    Point scaniaPoint = new Point(400,0);
+    Point scaniaPoint = new Point(200,0);
 
     // TODO: Make this general for all cars
     void moveit(int x, int y, Car carType){
@@ -53,6 +54,8 @@ public class DrawPanel extends JPanel{
         }
 
     }
+
+
 
     // This method is called each time the panel updates/refreshes/repaints itself
     // TODO: Change to suit your needs.

@@ -239,5 +239,6 @@ public abstract class Car implements Movable{
         }
     }
 
+    public abstract String getImage();
 
 }

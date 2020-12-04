@@ -4,6 +4,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 /*
 * This class represents the Controller part in the MVC pattern.
@@ -21,10 +22,10 @@ public class CarController {
     private Timer timer = new Timer(delay, new TimerListener());
 
     // The frame that represents this instance View of the MVC pattern
-    CarView frame;
+    private CarView frame;
 
     // A list of cars, modify if needed
-    ArrayList<Car> cars = new ArrayList<>();
+    private ArrayList<Car> cars = new ArrayList<>();
 
     //methods:
 
@@ -35,11 +36,23 @@ public class CarController {
         cc.cars.add(new Volvo240());
         cc.cars.add(new Saab95());
         cc.cars.add(new Scania());
-        cc.cars.get(1).setPosition(new Point2D.Double(100,0));
-        cc.cars.get(2).setPosition(new Point2D.Double(400,0));
+        cc.cars.add(new Volvo240());
+        cc.cars.add(new Saab95());
+        cc.cars.add(new Scania());
+        cc.cars.add(new Saab95());
+        cc.cars.add(new Saab95());
+        cc.cars.add(new Saab95());
+
+        //cc.cars.get(1).setPosition(new Point2D.Double(100,0));
+       // cc.cars.get(2).setPosition(new Point2D.Double(0,0));
+        //cc.cars.get(3).setPosition((new Point2D.Double(400,0)));
 
         // Start a new view and send a reference of self
         cc.frame = new CarView("CarSim 1.0", cc);
+
+        cc.setCarPositions();
+
+        cc.frame.drawPanel.addCars(cc.cars);
 
         // Start the timer
         cc.timer.start();
@@ -52,12 +65,14 @@ public class CarController {
         public void actionPerformed(ActionEvent e) {
             for (Car car : cars) {
                 if(canMove(car)) {
-                    moveCarAndPicture(car);
+                    //moveCarAndPicture(car);
+                    car.move();
+                    frame.drawPanel.repaint();
                 }
                 else{
                     car.stopEngine();
-                    //car.invertDir();
-                    car.turnLeft();
+                    car.invertDir();
+                    //car.turnLeft();
                     System.out.println("Turning");
                     car.startEngine();
                 }
@@ -89,13 +104,15 @@ public class CarController {
         return false;
     }
 
-    public void moveCarAndPicture(Car car){
+    /*
+    public void moveCar(Car car){
         car.move();
-        int x = (int) Math.round(car.getPosition().getX());
-        int y = (int) Math.round(car.getPosition().getY());
-        frame.drawPanel.moveit(x, y, car);
+       // int x = (int) Math.round(car.getPosition().getX());
+       // int y = (int) Math.round(car.getPosition().getY());
+       // frame.drawPanel.moveit(x, y, car);
         frame.drawPanel.repaint();
     }
+    */
 
     // Calls the gas method for each car once
     void gas(int amount) {
@@ -108,15 +125,14 @@ public class CarController {
     // Calls the brake method for each car once
     void brake(int amount) {
         double brake = ((double) amount) / 100;
-        for (Car car : cars
-        ) {
+        for (Car car : cars) {
             car.brake(brake);
         }
     }
 
     void turboOn(){
         for(Car car : cars){
-            if(car instanceof Saab95)
+            if(car instanceof Turbo)
                 ((Saab95) car).setTurboOn();
         }
     }
@@ -151,6 +167,19 @@ public class CarController {
     void stopEngine(){
         for(Car car : cars){
             car.stopEngine();
+        }
+    }
+
+    void setCarPositions(){
+        int x = 0;
+        int y = 0;
+        for(Car c : cars){
+            c.setPosition(new Point2D.Double(x, y));
+            x += 200;
+            if(x > frame.getX() - 100) {
+                x = 0;
+                y += 200;
+            }
         }
     }
 }

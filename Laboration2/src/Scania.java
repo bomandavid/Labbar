@@ -16,7 +16,7 @@ public class Scania extends Car {
     public Scania() {
         setNrDoors(2);
         setColor(Color.black);
-        setEnginePower(400);
+        setEnginePower(20);
         setSize(2);
         loadingAngle = 0;
     }
@@ -76,5 +76,10 @@ public class Scania extends Car {
     public void setCurrentSpeed(double amount) {
         if (getLoadingAngle() == 0)
             super.setCurrentSpeed(amount);
+    }
+
+    @Override
+    public String getImage() {
+        return "pics/Scania.jpg";
     }
 }

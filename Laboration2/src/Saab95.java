@@ -5,7 +5,7 @@ import java.awt.*;
  *     The Saab95 extends the Car class. In addition to a generic Car, the Saab95 can have a turbo.
  * </p>
  */
-public class Saab95 extends Car{
+public class Saab95 extends Car implements Turbo{
 
     private boolean turboOn;
 
@@ -15,7 +15,7 @@ public class Saab95 extends Car{
     public Saab95(){
         setNrDoors(2);
         setColor(Color.red);
-        setEnginePower(125);
+        setEnginePower(20);
         turboOn = false;
         setSize(1);
     }
@@ -40,8 +40,12 @@ public class Saab95 extends Car{
     @Override
     public double speedFactor(){
         double turbo = 1;
-        if(turboOn) turbo = 5;
+        if(turboOn) turbo = 1.5;
         return getEnginePower() * 0.01 * turbo;
+    }
+
+    public String getImage(){
+        return "pics/Saab95.jpg";
     }
 }
 

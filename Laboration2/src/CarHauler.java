@@ -102,6 +102,11 @@ public class CarHauler extends Car {
         }
     }
 
+    @Override
+    public String getImage() {
+        return null;
+    }
+
     /**
      * Car object turns left when hauler turns left.
      */
