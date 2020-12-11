@@ -1,3 +1,7 @@
+package Car;
+
+import Car.Car;
+
 import java.awt.*;
 
 /**
@@ -9,10 +13,10 @@ public class Volvo240 extends Car {
     /**
      * Sets number of doors, color and engine power
      */
-    public Volvo240() {
+     Volvo240() {
         setNrDoors(4);
         setColor(Color.black);
-        setEnginePower(20);
+        setEnginePower(300);
         setSize(1);
     }
 
@@ -26,5 +30,10 @@ public class Volvo240 extends Car {
 
     public String getImage(){
         return "pics/Volvo240.jpg";
+    }
+
+    @Override
+    public String getCarBrand() {
+        return "Volvo240";
     }
 }

@@ -1,8 +1,12 @@
+package Car;
+
+import Car.Car;
+
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Garage with the ability to add and remove cars
+ * Car.Garage with the ability to add and remove cars
  * @param <T> generic type of car
  */
 public class Garage <T extends Car> {
@@ -20,7 +24,7 @@ public class Garage <T extends Car> {
 
     /**
      * Adds car to garage if there is available space
-     * @param car Car to be added
+     * @param car Car.Car to be added
      */
     public void add(T car){
         if(cars.size()<capacity)
@@ -29,7 +33,7 @@ public class Garage <T extends Car> {
 
     /**
      * Removes the the specified car from the ArrayList of garage constituents.
-     * @param car Car to be removed.
+     * @param car Car.Car to be removed.
      */
     public void remove(T car){
         cars.remove(car);

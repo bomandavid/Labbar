@@ -1,19 +1,19 @@
+import Car.*;
+
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.geom.Point2D;
-import java.util.ArrayList;
-import java.util.HashMap;
 
-/*
+/**
 * This class represents the Controller part in the MVC pattern.
-* It's responsibilities is to listen to the View and responds in a appropriate manner by
-* modifying the model state and the updating the view.
+* It's responsibilities are to listen to get input from actionsListener in the View and responds in a appropriate manner by
+* sending update signals to the model.
  */
 
 public class CarController {
-    // member fields:
+    private final int frameX;
+    private final int frameY;
 
     // The delay (ms) corresponds to 20 updates a sec (hz)
     private final int delay = 50;
@@ -22,161 +22,172 @@ public class CarController {
     private Timer timer = new Timer(delay, new TimerListener());
 
     // The frame that represents this instance View of the MVC pattern
-    private CarView frame;
+    private CarModel model;
 
-    // A list of cars, modify if needed
-    private ArrayList<Car> cars = new ArrayList<>();
-
-    //methods:
-
-    public static void main(String[] args) {
-        // Instance of this class
-        CarController cc = new CarController();
-
-        cc.cars.add(new Volvo240());
-        cc.cars.add(new Saab95());
-        cc.cars.add(new Scania());
-        cc.cars.add(new Volvo240());
-        cc.cars.add(new Saab95());
-        cc.cars.add(new Scania());
-        cc.cars.add(new Saab95());
-        cc.cars.add(new Saab95());
-        cc.cars.add(new Saab95());
-
-        //cc.cars.get(1).setPosition(new Point2D.Double(100,0));
-       // cc.cars.get(2).setPosition(new Point2D.Double(0,0));
-        //cc.cars.get(3).setPosition((new Point2D.Double(400,0)));
-
-        // Start a new view and send a reference of self
-        cc.frame = new CarView("CarSim 1.0", cc);
-
-        cc.setCarPositions();
-
-        cc.frame.drawPanel.addCars(cc.cars);
-
-        // Start the timer
-        cc.timer.start();
+    /**
+     * Takes a model as a parameter as well as dimensions of frame.
+     * Sets the cars in the model on initial positions so they're not stacked on eachother.
+     * @param model the model to be used
+     * @param x the x dimention of frame.
+     * @param y the y dimenstion of frame.
+     */
+    public CarController(CarModel model, int x, int y){
+        this.model = model;
+        this.frameX = x;
+        this.frameY = y;
+        setInitialPositions();
+        timer.start();
     }
 
-    /* Each step the TimerListener moves all the cars in the list and tells the
-    * view to update its images. Change this method to your needs.
-    * */
+    /**
+     * Each step the TimerListener moves all the cars in the list notifes the observers.
+     * If the cars can't move, they invert direction and moves back.
+     */
     private class TimerListener implements ActionListener {
         public void actionPerformed(ActionEvent e) {
-            for (Car car : cars) {
+            for (Car car : model.getListOfCars()) {
                 if(canMove(car)) {
-                    //moveCarAndPicture(car);
                     car.move();
-                    frame.drawPanel.repaint();
+                    model.notifyObserversOnCarMove();
                 }
                 else{
                     car.stopEngine();
                     car.invertDir();
-                    //car.turnLeft();
-                    System.out.println("Turning");
                     car.startEngine();
                 }
             }
         }
     }
 
-    public boolean canMove(Car car){
-        double x = car.getPosition().getX();
-        double y = car.getPosition().getY();
-        Point2D.Double testPoint = new Point2D.Double();
-        switch(car.getDir()){
-            case Car.NORTH : testPoint = new Point2D.Double(x, y - car.getCurrentSpeed()); break;
-            case Car.SOUTH : testPoint = new Point2D.Double(x, y + car.getCurrentSpeed()); break;
-            case Car.EAST : testPoint = new Point2D.Double(x + car.getCurrentSpeed(), y); break;
-            case Car.WEST : testPoint = new Point2D.Double(x - car.getCurrentSpeed(), y ); break;
-        }
-        if(isOutOfBounds(testPoint))
-            return false;
-        return true;
-    }
-
-    public boolean isOutOfBounds(Point2D.Double testPoint){
-        double x = testPoint.getX();
-        double y = testPoint.getY();
-        if(y < 0 || x < 0 || x > frame.getX()-100 || y > frame.getY() - 300) {
+    /**
+     * Checks if a point is out of frame.
+     * @param testcar a car to check if it is out of frme.
+     * @return true if out of frame.
+     */
+    public boolean isOOB(Car testcar){
+        double x = testcar.getPosition().getX();
+        double y = testcar.getPosition().getY();
+        if(y < 0 || x < 0 || x > frameX-100 || y > frameY - 340) {
             return true;
         }
         return false;
     }
 
-    /*
-    public void moveCar(Car car){
+    /**
+     * Checks if the move is valid. Returns false if a move results out of frame.
+     * @param car
+     * @return true is move is valid.
+     */
+    public boolean canMove(Car car){
         car.move();
-       // int x = (int) Math.round(car.getPosition().getX());
-       // int y = (int) Math.round(car.getPosition().getY());
-       // frame.drawPanel.moveit(x, y, car);
-        frame.drawPanel.repaint();
-    }
-    */
+        if(isOOB(car)) {
+            car.invertDir();
+            car.move();
+            car.invertDir();
+            return false;
+        }
 
-    // Calls the gas method for each car once
+        car.invertDir();
+        car.move();
+        car.invertDir();
+        return true;
+    }
+
+    /*
+    public boolean isOutOfBounds(Point2D.Double testPoint){
+        double x = testPoint.getX();
+        double y = testPoint.getY();
+        if(y < 0 || x < 0 || x > frameX-100 || y > frameY - 340) {
+            return true;
+        }
+        return false;
+    }
+     */
+
+    /**
+     * Calls the gas method in the car model.
+     * @param amount gas amount.
+     */
     void gas(int amount) {
-        double gas = ((double) amount) / 100;
-        for (Car car : cars) {
-            car.gas(gas);
-        }
+        model.gas(amount);
     }
 
-    // Calls the brake method for each car once
+    /**
+     * Calls the brake method in the model.
+     * @param amount brake amount.
+     */
     void brake(int amount) {
-        double brake = ((double) amount) / 100;
-        for (Car car : cars) {
-            car.brake(brake);
-        }
+        model.brake(amount);
     }
 
+    /**
+     * Calls turboOn method in the model.
+     */
     void turboOn(){
-        for(Car car : cars){
-            if(car instanceof Turbo)
-                ((Saab95) car).setTurboOn();
-        }
+        model.turboOn();
     }
 
+    /**
+     * Calls turboOff method in the model.
+     */
     void turboOff(){
-        for(Car car : cars){
-            if(car instanceof Saab95)
-                ((Saab95) car).setTurboOff();
-        }
+        model.turboOff();
     }
 
+    /**
+     * Calls the lowerBed method in the model.
+     */
     void lowerBed(){
-        for(Car car : cars){
-            if(car instanceof Scania)
-                ((Scania) car).decreaseLoadingAngle(70);
-        }
+        model.lowerBed();
     }
 
+    /**
+     * Calls the liftBed method in the model.
+     */
     void liftBed(){
-        for(Car car : cars){
-            if(car instanceof Scania)
-                ((Scania) car).increaseLoadingAngle(70);
-        }
+        model.liftBed();
     }
 
+    /**
+     * Calls the startEngine method in the model.
+     */
     void startEngine(){
-        for(Car car : cars){
-            car.startEngine();
-        }
+        model.startEngine();
     }
 
+    /**
+     * Calls the stopEngine method in the model.
+     */
     void stopEngine(){
-        for(Car car : cars){
-            car.stopEngine();
-        }
+        model.stopEngine();
     }
 
-    void setCarPositions(){
+    /**
+     * Calls the addRandomCar method in the model.
+     */
+    void addRandomCar(){
+        model.addRandomCar();
+    }
+
+    /**
+     * Calls the removeCar method in the model.
+     */
+    void removeCar(){ model.removeCar();
+
+    }
+
+    /**
+     * Sets initial positions of the cars in the initial state of the model 100 pixels apart in line.
+     * Starts a new row if cars would end up out of frame.
+     */
+    void setInitialPositions(){
         int x = 0;
         int y = 0;
-        for(Car c : cars){
+        int xDist = 200;
+        for(Car c : model.getListOfCars()){
             c.setPosition(new Point2D.Double(x, y));
-            x += 200;
-            if(x > frame.getX() - 100) {
+            x += xDist;
+            if(x > this.frameX - xDist) {
                 x = 0;
                 y += 200;
             }

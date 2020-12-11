@@ -1,22 +1,26 @@
+package Car;
+
+import Car.Car;
+
 import java.awt.*;
 
 /**
  * <p>
- *     The Scania class inherits from the Car class. As opposed to a generic Car, a Scania
- *     has a flat bed for loading and unloading cargo. The bed can be risen and lowered and the Scania
+ *     The Car.Scania class inherits from the Car.Car class. As opposed to a generic Car.Car, a Car.Scania
+ *     has a flat bed for loading and unloading cargo. The bed can be risen and lowered and the Car.Scania
  *     is prevented from moving if the flat bed is not in its original position.
  * </p>
  */
-public class Scania extends Car {
+public class Scania extends Car implements FlatBed {
     private double loadingAngle;
 
     /**
      * Sets number of doors, color, engine power, size and loading angle. Defualt loading angle is zero
      */
-    public Scania() {
+    Scania() {
         setNrDoors(2);
         setColor(Color.black);
-        setEnginePower(20);
+        setEnginePower(300);
         setSize(2);
         loadingAngle = 0;
     }
@@ -81,5 +85,9 @@ public class Scania extends Car {
     @Override
     public String getImage() {
         return "pics/Scania.jpg";
+    }
+
+    public String getCarBrand(){
+        return "Scania";
     }
 }

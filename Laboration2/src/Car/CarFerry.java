@@ -1,9 +1,11 @@
+package Car;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.PriorityQueue;
 import java.util.Queue;
 
-public class CarFerry implements Movable{
+public class CarFerry implements Movable {
     private Queue<Car> cars;
     private CarHauler hasACarHauler;
 
@@ -19,21 +21,29 @@ public class CarFerry implements Movable{
         return getEnginePower() * 0.001;
     }
 
+    // Uncomment this, commented for experminetal purpose
+    /*
     public void loadCar(Car car) {
         hasACarHauler.loadCar(car);
         cars.add(car);
     }
 
+     */
+
+    // Uncomment this, commented for experminetal purpose
+    /*
     public void unloadCar() {
         hasACarHauler.unloadCar();
         Car car = cars.poll();
         switch (getDir()) {
-            case Car.NORTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y - 1)); break;
-            case Car.WEST: car.setPosition(new Point2D.Double(getPosition().x - 1, getPosition().y)); break;
-            case Car.SOUTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y + 1)); break;
-            case Car.EAST: car.setPosition(new Point2D.Double(getPosition().x + 1, getPosition().y)); break;
+            case NORTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y - 1)); break;
+            case WEST: car.setPosition(new Point2D.Double(getPosition().x - 1, getPosition().y)); break;
+            case SOUTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y + 1)); break;
+            case EAST: car.setPosition(new Point2D.Double(getPosition().x + 1, getPosition().y)); break;
         }
     }
+
+     */
 
     public void setRampUp() {
         hasACarHauler.setRampUp();
@@ -119,11 +129,14 @@ public class CarFerry implements Movable{
         hasACarHauler.setPosition(point);
     }
 
-    public int getDir() {
+    // Uncomment this, commented for experminetal purpose
+    /*
+    public Direction getDir() {
         return hasACarHauler.getDir();
     }
 
-    public void setDir(int dir) {
+    public void setDir(Direction dir) {
         hasACarHauler.setDir(dir);
     }
+     */
 }

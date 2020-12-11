@@ -1,8 +1,10 @@
+package Car;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Stack;
 
-public class CarHauler2 implements Movable{
+public class CarHauler2 implements Movable {
     private final int capacity = 5;
     private Stack<Car> cars;
     private Scania hasAScania;
@@ -32,25 +34,28 @@ public class CarHauler2 implements Movable{
         hasAScania.setCurrentSpeed(amount);
     }
 
+    // Uncomment this, commented for experminetal purpose
+    /*
     public void loadCar(Car car){
         if (cars.size() < capacity && hasAScania.getLoadingAngle() == 70 && car.getSize() < 2 && getPosition().distance(car.getPosition()) < 4) {
             car.setPosition(getPosition());
             cars.push(car);
         }
-        car.setDir(getDir());
+        car.setDir(hasAScania.getDir());
     }
 
     public void unloadCar(){
         if (hasAScania.getLoadingAngle() == 70) {
             Car car = cars.pop();
             switch (getDir()) {
-                case Car.NORTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y + 1)); break;
-                case Car.WEST: car.setPosition(new Point2D.Double(getPosition().x + 1, getPosition().y)); break;
-                case Car.SOUTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y - 1)); break;
-                case Car.EAST: car.setPosition(new Point2D.Double(getPosition().x - 1, getPosition().y)); break;
+                case NORTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y + 1)); break;
+                case WEST: car.setPosition(new Point2D.Double(getPosition().x + 1, getPosition().y)); break;
+                case SOUTH: car.setPosition(new Point2D.Double(getPosition().x, getPosition().y - 1)); break;
+                case EAST: car.setPosition(new Point2D.Double(getPosition().x - 1, getPosition().y)); break;
             }
         }
     }
+     */
 
     public void move(){
         hasAScania.move();
@@ -144,13 +149,16 @@ public class CarHauler2 implements Movable{
         hasAScania.setPosition(point);
     }
 
-    public int getDir() {
+    // Uncomment this, commented for experminetal purpose
+    /*
+    public Direction getDir() {
         return hasAScania.getDir();
     }
 
-    public void setDir(int dir) {
+    public void setDir(Direction dir) {
         hasAScania.setDir(dir);
     }
+    */
 
 
 }

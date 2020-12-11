@@ -1,10 +1,14 @@
+package Car;
+
+import Car.Car;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Stack;
 
 /**
  * <p>
- *     Car hauler can load and unload cars to its stack if the ramp is down.
+ *     Car.Car hauler can load and unload cars to its stack if the ramp is down.
  *     When the car hauler moves the cars in its stack move aswell.
  *     The position of the ramp can't change while moving.
  * </p>
@@ -40,8 +44,11 @@ public class CarHauler extends Car {
 
     /**
      * Adds car to the stack if there is space on the car hauler, the ramp is up and the car is close to the car hauler
-     * @param car Car to be loaded
+     * @param car Car.Car to be loaded
      */
+
+    // Uncomment this, commented for experminetal purpose
+    /*
     public void loadCar(Car car) {
         if (cars.size() < capacity && !rampUp && car.getSize() < 2 && getPosition().distance(car.getPosition()) < 4) {
             car.setPosition(getPosition());
@@ -52,7 +59,7 @@ public class CarHauler extends Car {
 
     /**
      * Unloads the most recently loaded car 1 unit of length behind the hauler.
-     */
+     *//*
     public void unloadCar() {
         if (!rampUp) {
             Car car = cars.pop();
@@ -64,6 +71,8 @@ public class CarHauler extends Car {
              }
         }
     }
+    */
+
 
     /**
      * Sets ramp to state "up"
@@ -81,7 +90,7 @@ public class CarHauler extends Car {
     }
 
     /**
-     * Car objects on hauler get same position as hauler.
+     * Car.Car objects on hauler get same position as hauler.
      */
     @Override
     public void move() {
@@ -92,7 +101,7 @@ public class CarHauler extends Car {
     }
 
     /**
-     * Car object turns right when hauler turns right.
+     * Car.Car object turns right when hauler turns right.
      */
     @Override
     public void turnRight(){
@@ -108,7 +117,7 @@ public class CarHauler extends Car {
     }
 
     /**
-     * Car object turns left when hauler turns left.
+     * Car.Car object turns left when hauler turns left.
      */
     @Override
     public void turnLeft(){
@@ -116,6 +125,11 @@ public class CarHauler extends Car {
         for (Car car : cars) {
             car.turnLeft();
         }
+    }
+
+    @Override
+    public String getCarBrand() {
+        return "CarHauler";
     }
 
     /**

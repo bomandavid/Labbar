@@ -1,3 +1,5 @@
+package Car;
+
 import java.awt.*;
 import java.awt.geom.Point2D;
 
@@ -8,24 +10,35 @@ import java.awt.geom.Point2D;
  *     cars speed, direction, position, engine power, size, number of doors and color.
  * </p>
  */
-public abstract class Car implements Movable{
+public abstract class Car implements Movable {
     private int nrDoors; // Number of doors on the car
     private double enginePower; // Engine power of the car
     private double currentSpeed; // The current speed of the car
     private Color color; // Color of the car
     private Point2D.Double position;
-    private int dir;
+    // private Direction dir;
     private int size;
-    public static final int NORTH = 0;
-    public static final int EAST = 1;
-    public static final int SOUTH = 2;
-    public static final int WEST = 3;
+    private Movable dirState;
+
+    private North north;
+    private South south;
+    private West west;
+    private East east;
+
 
     /**
-     * Car is given default position at (0,0)
+     * Car is given default position at (0,0), and defualt direction is south.
      */
     public Car(){
-        setDir(SOUTH);
+        north = new North(this);
+        south = new South(this);
+        west = new West(this);
+        east = new East(this);
+
+        dirState = south;
+
+        //dir = Direction.SOUTH;
+        //setDir(SOUTH);
         position = new Point2D.Double(0.0,0.0);
         stopEngine();
     }
@@ -113,12 +126,15 @@ public abstract class Car implements Movable{
     /**
      * Starts car engine and gives default starting speed 0.1
      */
-    protected void startEngine(){ setCurrentSpeed(0.1);}
+    public void startEngine(){
+       if(getCurrentSpeed() == 0)
+           setCurrentSpeed(0.1);
+    }
 
     /**
      * Sets current speed to 0
      */
-    protected void stopEngine(){
+    public void stopEngine(){
         currentSpeed = 0;
     }
 
@@ -156,7 +172,7 @@ public abstract class Car implements Movable{
      * </p>
      * @param amount Amount to be increased.
      */
-    protected void gas ( double amount){
+    public void gas ( double amount){
         if (0 <= amount && 1 >= amount) {
             incrementSpeed(amount);
         }
@@ -170,75 +186,118 @@ public abstract class Car implements Movable{
      * </p>
      * @param amount The amount to be decreased.
      */
-    protected void brake ( double amount){
+    public void brake ( double amount){
         if (0 <= amount && 1 >= amount) {
             decrementSpeed(amount);
         }
     }
 
     /**
-     * Changes position according to the current speed in the direction the car is facing.
-     */
-    public void move () {
-        switch (getDir()) {
-            case NORTH: position.y -= currentSpeed; break;
-            case WEST: position.x -= currentSpeed; break;
-            case SOUTH: position.y += currentSpeed; break;
-            case EAST: position.x += currentSpeed; break;
-        }
-    }
-
-    /**
-     * Getter for position of car.
-     * @return Position of the car.
+     *
+     * @return Position reference.
      */
     public Point2D.Double getPosition () {
         return position;
     }
 
-    protected void setPosition(Point2D.Double point){
+    /**
+     * Changes position for car object.
+     * @param point
+     */
+    public void setPosition(Point2D.Double point) {
         position.x = point.x;
         position.y = point.y;
     }
 
     /**
-     * Getter for direction of car.
-     * @return Direction of the car.
+     * Get image representation of the car.
+     * @return
      */
-    public int getDir () {
-        return dir;
-    }
-
-    public void setDir(int dir){ this.dir=dir; }
-
-    public void invertDir(){
-        turnLeft(); turnLeft();
-    }
-
-    /**
-     * Changes the direction to one turn to the left.
-     */
-    public void turnLeft () {
-        switch (dir) {
-            case NORTH: dir = WEST; break;
-            case WEST: dir = SOUTH; break;
-            case SOUTH: dir = EAST; break;
-            case EAST: dir = NORTH; break;
-        }
-    }
-
-    /**
-     * Changes the direction to one turn to the Right.
-     */
-    public void turnRight () {
-        switch (dir) {
-            case NORTH: dir = EAST; break;
-            case WEST: dir = NORTH; break;
-            case SOUTH: dir = WEST; break;
-            case EAST: dir = SOUTH; break;
-        }
-    }
-
     public abstract String getImage();
+
+    // new methods for state pattern
+
+    /**
+     * Changes directional state of the object.
+     * @param dirState The desired direction.
+     */
+    public void setDirection(Movable dirState){
+        this.dirState = dirState;
+    }
+
+    /**
+     * Turns car 180 degrees.
+     */
+    public void invertDir() {
+        turnLeft();
+        turnLeft();
+    }
+
+    /**
+     * Get south direction state.
+     * @return south state
+     */
+    public Movable getSouthState(){
+        return south;
+    }
+
+    /**
+     * Get east direction state.
+     * @return east state
+     */
+    public Movable getEastState(){
+        return east;
+    }
+
+    /**
+     * Get west direction state.
+     * @return west state
+     */
+    public Movable getWestState(){
+        return west;
+    }
+
+    /**
+     * Get north direction state.
+     * @return north state
+     */
+    public Movable getNorthState(){
+        return north;
+    }
+
+    /**
+     * Get the current direction state.
+     * @return  direction state
+     */
+    public Movable getDirState(){
+        return dirState;
+    }
+
+    /**
+     * Moves the car basen on its current direction.
+     */
+    public void move(){
+        dirState.move();
+    }
+
+    /**
+     * Turns the car 90 degrees right.
+     */
+    public void turnRight(){
+        dirState.turnRight();
+    }
+
+    /**
+     * Turns the car 90 degrees left.
+     */
+    public void turnLeft(){
+        dirState.turnLeft();
+    }
+
+    /**
+     * Get the brand of car object.
+     * @return
+     */
+    public abstract String getCarBrand();
 
 }
