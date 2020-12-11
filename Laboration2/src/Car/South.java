@@ -4,7 +4,7 @@ import java.awt.geom.Point2D;
 /**
  * A state that represent the South direction and has the according Movable methods.
  */
-public class South implements Movable {
+class South implements Movable {
 
     Car car;
     /**

@@ -1,7 +1,4 @@
 package Car;
-
-import Car.Car;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -9,7 +6,7 @@ import java.util.List;
  * Car.Garage with the ability to add and remove cars
  * @param <T> generic type of car
  */
-public class Garage <T extends Car> {
+class Garage <T extends Car> {
     private int capacity;
     private List<T> cars;
 

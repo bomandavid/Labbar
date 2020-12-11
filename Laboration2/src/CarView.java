@@ -4,7 +4,7 @@ import javax.swing.event.ChangeListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import Car.*;
+
 /**
  * This class represents the full view of the MVC pattern of your car simulator.
  * It initializes with being center on the screen and attaching it's controller in it's state.
@@ -17,11 +17,7 @@ public class CarView extends JFrame{
     private int Y;
 
     // The controller member
-    //CarModel model;
     CarController carC;
-
-    // dp2
-    //DrawPanel2 drawPanel = new DrawPanel2(X, Y-240);
 
     JPanel controlPanel = new JPanel();
 
@@ -35,7 +31,7 @@ public class CarView extends JFrame{
     JButton turboOnButton = new JButton("Turbo on");
     JButton turboOffButton = new JButton("Turbo off");
     JButton liftBedButton = new JButton("Lift Bed");
-    JButton lowerBedButton = new JButton("Lower Lift Bed");
+    JButton lowerBedButton = new JButton("Lower Bed");
 
     JButton startButton = new JButton("Start all cars");
     JButton stopButton = new JButton("Stop all cars");
@@ -55,7 +51,6 @@ public class CarView extends JFrame{
         this.carC = carC;
         this.X = X;
         this.Y = Y;
-        //this.drawPanel = dp;
         initComponents(framename);
     }
 
@@ -71,12 +66,9 @@ public class CarView extends JFrame{
      */
     public int getX(){return X;}
 
-    // Sets everything in place and fits everything
-    // TODO: Take a good look and make sure you understand how these methods and components work
-
     /**
-     * Method to initialize the all the elements of thw window.
-     * @param title
+     * Method to initialize the all the elements of the frame.
+     * @param  title of the frame
      */
     private void initComponents(String title) {
 

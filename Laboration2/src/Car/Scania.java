@@ -1,7 +1,4 @@
 package Car;
-
-import Car.Car;
-
 import java.awt.*;
 
 /**
@@ -11,7 +8,7 @@ import java.awt.*;
  *     is prevented from moving if the flat bed is not in its original position.
  * </p>
  */
-public class Scania extends Car implements FlatBed {
+class Scania extends Car implements FlatBed {
     private double loadingAngle;
 
     /**

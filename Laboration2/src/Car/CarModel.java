@@ -1,6 +1,7 @@
 package Car;
 import java.util.ArrayList;
 
+
 public class CarModel {
 
     private ArrayList<Car> listOfCars; //cars in the model

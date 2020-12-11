@@ -3,8 +3,8 @@ import Car.*;
 import javax.swing.*;
 import java.awt.*;
 import java.util.HashMap;
-import java.util.Map;
 
+import java.util.Map;
 /**
  * CarSpeedPanel displays the current speed of the cars in CarModel
  */

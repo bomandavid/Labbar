@@ -7,7 +7,7 @@ import java.awt.*;
  *     The Car.Saab95 extends the Car.Car class. In addition to a generic Car.Car, the Car.Saab95 can have a turbo.
  * </p>
  */
-public class Saab95 extends Car implements Turbo{
+class Saab95 extends Car implements Turbo{
 
     private boolean turboOn;
 

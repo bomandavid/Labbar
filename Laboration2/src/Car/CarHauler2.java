@@ -4,7 +4,7 @@ import java.awt.*;
 import java.awt.geom.Point2D;
 import java.util.Stack;
 
-public class CarHauler2 implements Movable {
+class CarHauler2 implements Movable {
     private final int capacity = 5;
     private Stack<Car> cars;
     private Scania hasAScania;

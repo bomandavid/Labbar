@@ -1,7 +1,5 @@
 package Car;
 
-import java.util.ArrayList;
-
 /**
  * A Factory class that can create each car
  */

@@ -3,7 +3,7 @@ package Car;
 /**
  * Interface that represents features of an object that can move.
  */
-interface Movable {
+public interface Movable {
 
     //enum Direction{NORTH, SOUTH, WEST, EAST}
 

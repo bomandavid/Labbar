@@ -1,11 +1,6 @@
 package Car;
-
-import Car.Car;
-
 import java.awt.*;
-import java.awt.geom.Point2D;
 import java.util.Stack;
-
 /**
  * <p>
  *     Car.Car hauler can load and unload cars to its stack if the ramp is down.
@@ -14,7 +9,7 @@ import java.util.Stack;
  * </p>
  *
  */
-public class CarHauler extends Car {
+class CarHauler extends Car {
     private boolean rampUp;
     private int capacity;
     private Stack<Car> cars;

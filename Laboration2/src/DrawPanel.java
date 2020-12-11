@@ -1,7 +1,4 @@
-import Car.Car;
-import Car.CarModel;
-import Car.CarObserver;
-
+import Car.*;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
